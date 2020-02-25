@@ -25,6 +25,11 @@ namespace Supermarket.API
             return await categoryRepository.ListAsync();
         }
 
+        public async Task<Category> ShowAsync(int id)
+        {
+            return await categoryRepository.FindByIdAsync(id);
+        }
+
         public async Task<SaveCategoryResponse> SaveAsync(Category category)
         {
             try
@@ -37,6 +42,52 @@ namespace Supermarket.API
             catch (Exception ex)
             {
                 return new SaveCategoryResponse($"An error occurred when saving the category: {ex.Message}");
+            }
+        }
+
+        public async Task<SaveCategoryResponse> UpdateAsync(int id, Category category)
+        {
+            var existingCategory = await categoryRepository.FindByIdAsync(id);
+
+            if (existingCategory == null)
+            {
+                return new SaveCategoryResponse("Category not found.");
+            }
+
+            existingCategory.Name = category.Name;
+
+            try
+            {
+                categoryRepository.Update(existingCategory);
+                await unitOfWork.CompleteAsync();
+
+                return new SaveCategoryResponse(existingCategory);
+            }
+            catch (Exception ex)
+            {
+                return new SaveCategoryResponse($"An error occurred when updating the category: {ex.Message}");
+            }
+        }
+
+        public async Task<SaveCategoryResponse> DeleteAsync(int id)
+        {
+            var existingCategory = await categoryRepository.FindByIdAsync(id);
+
+            if (existingCategory == null)
+            {
+                return new SaveCategoryResponse("Category not found.");
+            }
+
+            try
+            {
+                categoryRepository.Remove(existingCategory);
+                await unitOfWork.CompleteAsync();
+
+                return new SaveCategoryResponse(existingCategory);
+            }
+            catch (Exception ex)
+            {
+                return new SaveCategoryResponse($"An error occurred when deleting the category: {ex.Message}");
             }
         }
     }

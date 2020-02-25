@@ -23,7 +23,7 @@ namespace Supermarket.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CategoryResource>> GetAllAsync()
+        public async Task<IEnumerable<CategoryResource>> ListAsync()
         {
             var categories = await categoryService.ListAsync();
             var resources = mapper.Map<IEnumerable<Category>, IEnumerable<CategoryResource>>(categories);
@@ -31,8 +31,17 @@ namespace Supermarket.API.Controllers
             return resources;
         }
 
+        [HttpGet("{id}")]
+        public async Task<CategoryResource> ShowAsync(int id)
+        {
+            var category = await categoryService.ShowAsync(id);
+            var resource = mapper.Map<Category, CategoryResource>(category);
+
+            return resource;
+        }
+
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] SaveCategoryResource resource)
+        public async Task<IActionResult> CreateAsync([FromBody] SaveCategoryResource resource)
         {
             if (!ModelState.IsValid)
             {
@@ -50,6 +59,35 @@ namespace Supermarket.API.Controllers
             var categoryResource = mapper.Map<Category, CategoryResource>(result.Category);
 
             return Created($"/api/categories/{categoryResource.Id}", categoryResource);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] SaveCategoryResource resource)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorMessages());
+            }
+
+            var category = mapper.Map<SaveCategoryResource, Category>(resource);
+            var result = await categoryService.UpdateAsync(id, category);
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+
+            var categoryResource = mapper.Map<Category, CategoryResource>(result.Category);
+
+            return Ok(categoryResource);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            await categoryService.DeleteAsync(id);
+
+            return NoContent();
         }
     }
 }
