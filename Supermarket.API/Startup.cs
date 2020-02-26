@@ -35,7 +35,8 @@ namespace Supermarket.API
                     options.UseInMemoryDatabase("supermarket-api-in-memory");
                 });
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services
+                .AddScoped<IUnitOfWork, UnitOfWork>();
 
             services
                 .AddScoped<ICategoryRepository, CategoryRepository>();
@@ -48,6 +49,12 @@ namespace Supermarket.API
 
             services
                 .AddScoped<IProductService, ProductService>();
+
+            services
+                .AddScoped<IQuestionRepository, QuestionRepository>();
+
+            services
+                .AddScoped<IQuestionService, QuestionService>();
 
             services
                 .AddAutoMapper(typeof(Startup));

@@ -2,7 +2,7 @@
 
 namespace Supermarket.API.Domain.Models
 {
-    public enum EUnitOfMeasurement : byte
+    public enum EUnitOfMeasurement 
     {
         [Description("UN")]
         Unity = 1,

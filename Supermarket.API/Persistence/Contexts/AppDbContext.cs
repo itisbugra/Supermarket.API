@@ -9,6 +9,8 @@ namespace Supermarket.API.Persistence.Contexts
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Question> Questions { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
             //  Empty implementation
@@ -56,6 +58,29 @@ namespace Supermarket.API.Persistence.Contexts
                     CategoryId = 101,
                 }
             );
+
+            builder.Entity<Question>().ToTable("Questions");
+            builder.Entity<Question>().HasKey(p => p.Id);
+            builder.Entity<Question>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Question>().Property(p => p.Body).IsRequired();
+            builder.Entity<Question>().Property(p => p.MimeType).IsRequired();
+            builder.Entity<Question>().HasMany(p => p.Options).WithOne(p => p.Question).HasForeignKey(p => p.QuestionId);
+
+            builder.Entity<Question>().HasData
+            (
+                new Question
+                {
+                    Id = 100,
+                    Body = "Aşağıdakilerden hangisi yanlıştır?",
+                    MimeType = EMimeType.PlainText
+                }
+            );
+
+            builder.Entity<Option>().ToTable("QuestionOptions");
+            builder.Entity<Option>().HasKey(p => p.Id);
+            builder.Entity<Option>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Option>().Property(p => p.Body).IsRequired();
+            builder.Entity<Option>().Property(p => p.MimeType).IsRequired();
         }
     }
 }
