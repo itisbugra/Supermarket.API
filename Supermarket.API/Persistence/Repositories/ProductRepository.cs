@@ -17,7 +17,7 @@ namespace Supermarket.API.Persistence.Repositories
         public async Task<IEnumerable<Product>> ListAsync()
         {
             return await context.Products.Include(p => p.Category)
-                .ToListAsync();
+                                         .ToListAsync();
         }
     }
 }

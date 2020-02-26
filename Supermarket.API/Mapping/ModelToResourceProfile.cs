@@ -24,6 +24,12 @@ namespace Supermarket.API.Mapping
                     src => src.MimeType, 
                     opt => opt.MapFrom(src => src.MimeType.ToDescriptionString())
                 );
+
+            CreateMap<Option, OptionView>()
+                .ForMember(
+                    src => src.MimeType,
+                    opt => opt.MapFrom(src => src.MimeType.ToDescriptionString())
+                );
         }
     }
 }

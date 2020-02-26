@@ -1,4 +1,6 @@
 ﻿using Supermarket.API.Domain.Models;
+using System;
+using System.Collections.Generic;
 
 namespace Supermarket.API.Controllers.Views
 {
@@ -9,5 +11,9 @@ namespace Supermarket.API.Controllers.Views
         public string Body { get; set; }
 
         public string MimeType { get; set; }
+
+        public IEnumerable<OptionView> Options { get; set; }
+
+        public DateTime InsertedAt { get; set; }
     }
 }

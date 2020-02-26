@@ -18,7 +18,8 @@ namespace Supermarket.API.Persistence.Repositories
 
         public async Task<IEnumerable<Question>> ListAsync()
         {
-            return await context.Questions.ToListAsync();
+            return await context.Questions.Include(q => q.Options)
+                                          .ToListAsync();
         }
 
         public async Task AddAsync(Question question)

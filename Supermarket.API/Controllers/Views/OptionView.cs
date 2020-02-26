@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Supermarket.API.Domain.Models
+namespace Supermarket.API.Controllers.Views
 {
-    public class Option
+    public class OptionView
     {
         public int Id { get; set; }
-
+        
         public string Body { get; set; }
 
-        public EMimeType MimeType { get; set; }
+        public string MimeType { get; set; }
 
         public bool IsCorrectOption { get; set; }
-
-        public int QuestionId { get; set; }
-
-        public Question Question { get; set; }
     }
 }

@@ -65,6 +65,7 @@ namespace Supermarket.API.Persistence.Contexts
             builder.Entity<Question>().Property(p => p.Body).IsRequired();
             builder.Entity<Question>().Property(p => p.MimeType).IsRequired();
             builder.Entity<Question>().HasMany(p => p.Options).WithOne(p => p.Question).HasForeignKey(p => p.QuestionId);
+            builder.Entity<Question>().Property(p => p.InsertedAt).HasDefaultValueSql("getdate()").IsRequired();
 
             builder.Entity<Question>().HasData
             (
@@ -72,7 +73,7 @@ namespace Supermarket.API.Persistence.Contexts
                 {
                     Id = 100,
                     Body = "Aşağıdakilerden hangisi yanlıştır?",
-                    MimeType = EMimeType.PlainText
+                    MimeType = EMimeType.PlainText,
                 }
             );
 
@@ -81,6 +82,27 @@ namespace Supermarket.API.Persistence.Contexts
             builder.Entity<Option>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Option>().Property(p => p.Body).IsRequired();
             builder.Entity<Option>().Property(p => p.MimeType).IsRequired();
+            builder.Entity<Option>().Property(p => p.IsCorrectOption).IsRequired();
+
+            builder.Entity<Option>().HasData
+            (
+                new Option
+                {
+                    Id = 100,
+                    Body = "Bu doğrudur mesela.",
+                    MimeType = EMimeType.PlainText,
+                    IsCorrectOption = true,
+                    QuestionId = 100,
+                },
+                new Option
+                {
+                    Id = 101,
+                    Body = "Ama bu yanlıştır.",
+                    MimeType = EMimeType.PlainText,
+                    IsCorrectOption = false,
+                    QuestionId = 100,
+                }
+            );
         }
     }
 }

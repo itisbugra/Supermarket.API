@@ -14,5 +14,7 @@ namespace Supermarket.API.Domain.Models
         public EMimeType MimeType { get; set; }
 
         public IList<Option> Options { get; set; } = new List<Option>();
+
+        public DateTime InsertedAt { get; set; }
     }
 }

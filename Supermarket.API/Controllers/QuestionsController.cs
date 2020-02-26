@@ -23,16 +23,16 @@ namespace Supermarket.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<QuestionView>> ListAsync()
+        public async Task<IActionResult> ListAsync()
         {
             var questions = await questionService.ListAsync();
             var resources = mapper.Map<IEnumerable<Question>, IEnumerable<QuestionView>>(questions);
 
-            return resources;
+            return Ok(resources);
         }
 
         [HttpGet("/{id}")]
-        public async Task<QuestionView> ShowAsync()
+        public async Task<IActionResult> ShowAsync()
         {
             throw new NotImplementedException();
         }
