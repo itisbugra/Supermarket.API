@@ -16,5 +16,7 @@ namespace Supermarket.API.Domain.Models
         public bool IsVisible { get; set; }
 
         public DateTime InsertedAt { get; set; }
+
+        public IList<PoolPickHandle> PoolPickHandles { get; set; } = new List<PoolPickHandle>();
     }
 }

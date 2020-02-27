@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Supermarket.API.Domain.Models.Database;
 using Supermarket.API.Domain.Repositories;
 using Supermarket.API.Domain.Services;
 using Supermarket.API.Persistence.Contexts;
@@ -55,6 +56,9 @@ namespace Supermarket.API
 
             services
                 .AddScoped<IQuestionService, QuestionService>();
+
+            services
+                .AddScoped<IModelCreatingDbContextEnhancer, PoolPickHandleDbContextEnhancer>();
 
             services
                 .AddAutoMapper(typeof(Startup));

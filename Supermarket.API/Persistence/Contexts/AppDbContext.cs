@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Supermarket.API.Domain.Models;
+using Supermarket.API.Domain.Models.Database;
+using System.Collections.Generic;
 
 namespace Supermarket.API.Persistence.Contexts
 {
@@ -11,9 +13,14 @@ namespace Supermarket.API.Persistence.Contexts
 
         public DbSet<Question> Questions { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        private readonly IEnumerable<IModelCreatingDbContextEnhancer> dbContextEnhancers;
+
+        public AppDbContext(
+            DbContextOptions<AppDbContext> options, 
+            IEnumerable<IModelCreatingDbContextEnhancer> dbContextEnhancers
+        ) : base(options)
         {
-            //  Empty implementation
+            this.dbContextEnhancers = dbContextEnhancers;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -108,6 +115,11 @@ namespace Supermarket.API.Persistence.Contexts
                     QuestionId = 100,
                 }
             );
+
+            foreach (var enhancer in dbContextEnhancers)
+            {
+                enhancer.OnModelCreating(builder);
+            }
         }
     }
 }
