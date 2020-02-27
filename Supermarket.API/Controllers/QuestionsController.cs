@@ -32,7 +32,7 @@ namespace Supermarket.API.Controllers
         }
 
         [HttpGet("/{id}")]
-        public async Task<IActionResult> ShowAsync()
+        public async Task<IActionResult> ShowAsync(int id)
         {
             throw new NotImplementedException();
         }

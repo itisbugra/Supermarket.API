@@ -2,22 +2,22 @@
 using Supermarket.API.Domain.Models;
 using Supermarket.API.Domain.Repositories;
 using Supermarket.API.Persistence.Contexts;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Supermarket.API.Persistence.Repositories
 {
-    public class ProductRepository : BaseRepository, IProductRepository
+    public class ContextRepository : BaseRepository, IContextRepository
     {
-        public ProductRepository(AppDbContext context) : base(context)
+        public ContextRepository(AppDbContext context) : base(context)
         {
             //  Empty implementation
         }
 
-        public async Task<IEnumerable<Product>> ListAsync()
+        public async Task<IEnumerable<Context>> ListAsync()
         {
-            return await context.Products.Include(p => p.Category)
-                                         .ToListAsync();
+            return await context.Contexts.ToListAsync();
         }
     }
 }

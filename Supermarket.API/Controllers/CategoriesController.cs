@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Supermarket.API.Controllers.Forms;
+using Supermarket.API.Controllers.Views;
 using Supermarket.API.Domain.Models;
 using Supermarket.API.Domain.Services;
 using Supermarket.API.Extensions;
@@ -23,19 +25,19 @@ namespace Supermarket.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CategoryResource>> ListAsync()
+        public async Task<IEnumerable<CategoryView>> ListAsync()
         {
             var categories = await categoryService.ListAsync();
-            var resources = mapper.Map<IEnumerable<Category>, IEnumerable<CategoryResource>>(categories);
+            var resources = mapper.Map<IEnumerable<Category>, IEnumerable<CategoryView>>(categories);
 
             return resources;
         }
 
         [HttpGet("{id}")]
-        public async Task<CategoryResource> ShowAsync(int id)
+        public async Task<CategoryView> ShowAsync(int id)
         {
             var category = await categoryService.ShowAsync(id);
-            var resource = mapper.Map<Category, CategoryResource>(category);
+            var resource = mapper.Map<Category, CategoryView>(category);
 
             return resource;
         }
@@ -56,7 +58,7 @@ namespace Supermarket.API.Controllers
                 return BadRequest(result.Message);
             }
 
-            var categoryResource = mapper.Map<Category, CategoryResource>(result.Category);
+            var categoryResource = mapper.Map<Category, CategoryForm>(result.Category);
 
             return Created($"/api/categories/{categoryResource.Id}", categoryResource);
         }
@@ -77,7 +79,7 @@ namespace Supermarket.API.Controllers
                 return BadRequest(result.Message);
             }
 
-            var categoryResource = mapper.Map<Category, CategoryResource>(result.Category);
+            var categoryResource = mapper.Map<Category, CategoryForm>(result.Category);
 
             return Ok(categoryResource);
         }

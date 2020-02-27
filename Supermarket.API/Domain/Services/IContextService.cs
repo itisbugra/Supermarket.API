@@ -1,11 +1,13 @@
 ﻿using Supermarket.API.Domain.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Supermarket.API.Domain.Services
 {
-    public interface IProductService
+    public interface IContextService
     {
-        Task<IEnumerable<Product>> ListAsync();
+        public Task<IEnumerable<Context>> ListAsync();
     }
 }

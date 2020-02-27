@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Supermarket.API.Domain.Models
 {
@@ -14,6 +12,8 @@ namespace Supermarket.API.Domain.Models
         public EMimeType MimeType { get; set; }
 
         public IList<Option> Options { get; set; } = new List<Option>();
+
+        public bool IsVisible { get; set; }
 
         public DateTime InsertedAt { get; set; }
     }

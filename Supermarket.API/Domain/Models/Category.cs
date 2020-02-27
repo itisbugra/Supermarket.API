@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Supermarket.API.Domain.Models
 {
@@ -8,6 +9,12 @@ namespace Supermarket.API.Domain.Models
 
         public string Name { get; set; }
 
-        public IList<Product> Products { get; set; } = new List<Product>();
+        public int? ParentCategoryId { get; set; }
+
+        public DateTime InsertedAt { get; set; }
+
+        public Category ParentCategory { get; set; }
+
+        public IList<Category> Categories { get; set; } = new List<Category>();
     }
 }

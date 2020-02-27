@@ -7,5 +7,7 @@ namespace Supermarket.API.Resources
         [Required]
         [MaxLength(30)]
         public string Name { get; set; }
+
+        public int ParentCategoryId { get; set; }
     }
 }

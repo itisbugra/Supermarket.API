@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using Supermarket.API.Controllers.Forms;
 using Supermarket.API.Controllers.Views;
 using Supermarket.API.Domain.Models;
 using Supermarket.API.Extensions;
-using Supermarket.API.Resources;
 
 namespace Supermarket.API.Mapping
 {
@@ -11,13 +9,9 @@ namespace Supermarket.API.Mapping
     {
         public ModelToResourceProfile()
         {
-            CreateMap<Category, CategoryResource>();
+            CreateMap<Context, ContextView>();
 
-            CreateMap<Product, ProductResource>()
-                .ForMember(
-                    src => src.UnitOfMeasurement,
-                    opt => opt.MapFrom(src => src.UnitOfMeasurement.ToDescriptionString())
-                );
+            CreateMap<Category, CategoryView>();
 
             CreateMap<Question, QuestionView>()
                 .ForMember(

@@ -5,9 +5,9 @@ namespace Supermarket.API.Persistence.Contexts
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Context> Contexts { get; set; }
 
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public DbSet<Question> Questions { get; set; }
 
@@ -20,43 +20,46 @@ namespace Supermarket.API.Persistence.Contexts
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<Context>().ToTable("Contexts");
+            builder.Entity<Context>().HasKey(p => p.Id);
+            builder.Entity<Context>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Context>().Property(p => p.Name).IsRequired();
+            builder.Entity<Context>().Property(p => p.Description).IsRequired();
+            builder.Entity<Context>().Property(p => p.IsVisible).IsRequired();
+            builder.Entity<Context>().Property(p => p.InsertedAt).HasDefaultValueSql("getdate()").IsRequired();
+
+            builder.Entity<Context>().HasData
+            (
+                new Context
+                {
+                    Id = 100,
+                    Name = "Scholastic Aptitude Test",
+                    Description = "ational Curriculum assessment usually refers to the statutory assessments carried out in primary schools in England, colloquially known as standard attainment tests (SATs). The assessments are made up of a combination of testing and teacher assessment judgements, and are used in all government-funded primary schools in England to assess the attainment of pupils against the programmes of study of the National Curriculum at the end of Key Stages 1 and 2, when most pupils are aged 7 and 11 respectively. Until 2008, assessments were also required at the end of Key Stage 3 (14-year-olds) in secondary schools. > Source: [Wikipedia](https://en.wikipedia.org/wiki/National_Curriculum_assessment)",
+                    ShortName = "SAT",
+                    IsVisible = true
+                }
+            );
+
             builder.Entity<Category>().ToTable("Categories");
             builder.Entity<Category>().HasKey(p => p.Id);
             builder.Entity<Category>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Category>().Property(p => p.Name).IsRequired().HasMaxLength(30);
-            builder.Entity<Category>().HasMany(p => p.Products).WithOne(p => p.Category).HasForeignKey(p => p.CategoryId);
+            builder.Entity<Category>().Property(p => p.InsertedAt).HasDefaultValueSql("getdate()").IsRequired();
+            builder.Entity<Category>()
+                   .HasMany(p => p.Categories)
+                   .WithOne(p => p.ParentCategory)
+                   .HasForeignKey(p => p.ParentCategoryId)
+                   .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<Category>().HasData
             (
-                new Category { Id = 100, Name = "Fruits and Vegetables" },
-                new Category { Id = 101, Name = "Dairy" }
+                new Category { Id = 100, Name = "Mathematics" },
+                new Category { Id = 101, Name = "Physics" }
             );
 
-            builder.Entity<Product>().ToTable("Products");
-            builder.Entity<Product>().HasKey(p => p.Id);
-            builder.Entity<Product>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<Product>().Property(p => p.Name).IsRequired().HasMaxLength(30);
-            builder.Entity<Product>().Property(p => p.QuantityInPackage).IsRequired();
-            builder.Entity<Product>().Property(p => p.UnitOfMeasurement).IsRequired();
-
-            builder.Entity<Product>().HasData
+            builder.Entity<Category>().HasData
             (
-                new Product
-                {
-                    Id = 100,
-                    Name = "Apple",
-                    QuantityInPackage = 1,
-                    UnitOfMeasurement = EUnitOfMeasurement.Unity,
-                    CategoryId = 100
-                },
-                new Product
-                {
-                    Id = 101,
-                    Name = "Milk",
-                    QuantityInPackage = 2,
-                    UnitOfMeasurement = EUnitOfMeasurement.Liter,
-                    CategoryId = 101,
-                }
+                new Category { Id = 102, Name = "Derivatives", ParentCategoryId = 100 }
             );
 
             builder.Entity<Question>().ToTable("Questions");
@@ -64,8 +67,9 @@ namespace Supermarket.API.Persistence.Contexts
             builder.Entity<Question>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Question>().Property(p => p.Body).IsRequired();
             builder.Entity<Question>().Property(p => p.MimeType).IsRequired();
-            builder.Entity<Question>().HasMany(p => p.Options).WithOne(p => p.Question).HasForeignKey(p => p.QuestionId);
+            builder.Entity<Question>().Property(p => p.IsVisible).IsRequired();
             builder.Entity<Question>().Property(p => p.InsertedAt).HasDefaultValueSql("getdate()").IsRequired();
+            builder.Entity<Question>().HasMany(p => p.Options).WithOne(p => p.Question).HasForeignKey(p => p.QuestionId);
 
             builder.Entity<Question>().HasData
             (
@@ -74,6 +78,7 @@ namespace Supermarket.API.Persistence.Contexts
                     Id = 100,
                     Body = "Aşağıdakilerden hangisi yanlıştır?",
                     MimeType = EMimeType.PlainText,
+                    IsVisible = true,
                 }
             );
 

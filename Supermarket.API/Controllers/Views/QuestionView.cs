@@ -14,6 +14,8 @@ namespace Supermarket.API.Controllers.Views
 
         public IEnumerable<OptionView> Options { get; set; }
 
+        public bool IsVisible { get; set; }
+
         public DateTime InsertedAt { get; set; }
     }
 }

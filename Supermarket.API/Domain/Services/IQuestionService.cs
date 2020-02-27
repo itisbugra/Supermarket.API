@@ -13,10 +13,10 @@ namespace Supermarket.API.Domain.Services
 
         Task<Question> ShowAsync(int id);
 
-        Task<QuestionView> SaveAsync(Question question);
+        Task<Question> SaveAsync(Question question);
 
-        Task<QuestionView> UpdateAsync(Question question);
+        Task<Question> UpdateAsync(Question question);
 
-        Task<QuestionView> DeleteAsync(Question question);
+        Task<Question> DeleteAsync(Question question);
     }
 }

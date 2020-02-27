@@ -16,14 +16,14 @@ namespace Supermarket.API
             this.questionRepository = questionRepository;
         }
 
-        public Task<QuestionView> DeleteAsync(Question question)
+        public Task<Question> DeleteAsync(Question question)
         {
             throw new System.NotImplementedException();
         }
 
         public async Task<IEnumerable<Question>> ListAsync() => await questionRepository.ListAsync();
 
-        public Task<QuestionView> SaveAsync(Question question)
+        public Task<Question> SaveAsync(Question question)
         {
             throw new System.NotImplementedException();
         }
@@ -33,7 +33,7 @@ namespace Supermarket.API
             throw new System.NotImplementedException();
         }
 
-        public Task<QuestionView> UpdateAsync(Question question)
+        public Task<Question> UpdateAsync(Question question)
         {
             throw new System.NotImplementedException();
         }
