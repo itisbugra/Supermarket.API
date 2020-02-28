@@ -32,6 +32,9 @@ namespace Supermarket.API.Persistence.Repositories
             return await context.Questions.FindAsync(id);
         }
 
+        public async Task<Question> FindRandomAsync() =>
+            await context.Questions.OrderBy(o => Guid.NewGuid()).FirstAsync();
+
         public void Update(Question question)
         {
             context.Questions.Update(question);

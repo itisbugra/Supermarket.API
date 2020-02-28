@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Supermarket.API.Domain.Models.Database
 {
@@ -26,10 +22,17 @@ namespace Supermarket.API.Domain.Models.Database
                    .HasDefaultValueSql("getdate()")
                    .IsRequired();
             builder.Entity<PoolPickHandle>()
+                   .HasOne(p => p.Picker)
+                   .WithMany(p => p.PoolPickHandles)
+                   .HasForeignKey(p => p.PickerId)
+                   .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<PoolPickHandle>()
                    .HasOne(p => p.Question)
                    .WithMany(p => p.PoolPickHandles)
                    .HasForeignKey(p => p.QuestionId)
                    .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<PoolPickHandle>()
+                   .HasAlternateKey(p => new { p.PickerId, p.QuestionId });
 
             builder.Entity<PoolPickHandle>().HasData
             (

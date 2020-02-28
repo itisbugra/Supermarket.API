@@ -37,28 +37,11 @@ namespace Supermarket.API
                 });
 
             services
-                .AddScoped<IUnitOfWork, UnitOfWork>();
-
-            services
-                .AddScoped<IContextRepository, ContextRepository>();
-
-            services
-                .AddScoped<IContextService, ContextService>();
-
-            services
-                .AddScoped<ICategoryRepository, CategoryRepository>();
-
-            services
-                .AddScoped<ICategoryService, CategoryService>();
-
-            services
-                .AddScoped<IQuestionRepository, QuestionRepository>();
-
-            services
-                .AddScoped<IQuestionService, QuestionService>();
-
-            services
-                .AddScoped<IModelCreatingDbContextEnhancer, PoolPickHandleDbContextEnhancer>();
+                .Scan(scan => 
+                    scan.FromCallingAssembly()
+                        .AddClasses()
+                        .AsImplementedInterfaces()
+                        .WithTransientLifetime());
 
             services
                 .AddAutoMapper(typeof(Startup));

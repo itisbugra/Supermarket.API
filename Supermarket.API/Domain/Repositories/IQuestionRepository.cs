@@ -12,6 +12,8 @@ namespace Supermarket.API.Domain.Repositories
 
         Task<Question> FindByIdAsync(int id);
 
+        Task<Question> FindRandomAsync();
+
         void Update(Question question);
 
         void Remove(Question question);

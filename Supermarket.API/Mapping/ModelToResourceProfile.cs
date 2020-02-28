@@ -9,6 +9,8 @@ namespace Supermarket.API.Mapping
     {
         public ModelToResourceProfile()
         {
+            CreateMap<User, UserView>();
+
             CreateMap<Context, ContextView>();
 
             CreateMap<Category, CategoryView>();
@@ -24,6 +26,8 @@ namespace Supermarket.API.Mapping
                     src => src.MimeType,
                     opt => opt.MapFrom(src => src.MimeType.ToDescriptionString())
                 );
+
+            CreateMap<PoolPickHandle, PoolPickHandleView>();
         }
     }
 }

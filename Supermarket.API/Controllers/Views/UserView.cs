@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Supermarket.API.Domain.Models
+namespace Supermarket.API.Controllers.Views
 {
-    public class User
+    public class UserView
     {
         public int Id { get; set; }
 
-        public IList<PoolPickHandle> PoolPickHandles { get; set; } = new List<PoolPickHandle>();
+        public DateTime InsertedAt { get; set; }
     }
 }
