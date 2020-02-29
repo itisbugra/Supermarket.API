@@ -9,5 +9,7 @@ namespace Supermarket.API.Domain.Services
     public interface IUserService
     {
         Task<IEnumerable<User>> ListAsync();
+
+        Task<User> ShowAsync(int id);
     }
 }

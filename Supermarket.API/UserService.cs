@@ -1,4 +1,5 @@
-﻿using Supermarket.API.Domain.Models;
+﻿using Supermarket.API.Attributes;
+using Supermarket.API.Domain.Models;
 using Supermarket.API.Domain.Repositories;
 using Supermarket.API.Domain.Services;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Supermarket.API
 {
+    [Injected]
     public class UserService : IUserService
     {
         private readonly IUserRepository userRepository;
@@ -17,6 +19,10 @@ namespace Supermarket.API
             this.userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<User>> ListAsync() => await userRepository.ListAsync();
+        public async Task<IEnumerable<User>> ListAsync() => 
+            await userRepository.ListAsync();
+
+        public async Task<User> ShowAsync(int id) =>
+            await userRepository.FindByIdAsync(id);
     }
 }

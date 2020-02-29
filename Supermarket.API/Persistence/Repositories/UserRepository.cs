@@ -2,13 +2,14 @@
 using Supermarket.API.Domain.Models;
 using Supermarket.API.Domain.Repositories;
 using Supermarket.API.Persistence.Contexts;
-using System;
+using Supermarket.API.Extensions;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Supermarket.API.Attributes;
 
 namespace Supermarket.API.Persistence.Repositories
 {
+    [Injected]
     public class UserRepository : BaseRepository, IUserRepository
     {
         public UserRepository(AppDbContext context) : base(context)
@@ -16,6 +17,10 @@ namespace Supermarket.API.Persistence.Repositories
             //  Empty implementation
         }
 
-        public async Task<IEnumerable<User>> ListAsync() => await context.Users.ToListAsync();
+        public async Task<IEnumerable<User>> ListAsync() => 
+            await context.Users.ToListAsync();
+
+        public async Task<User> FindByIdAsync(int id) =>
+            await context.Users.FindOrThrowAsync(id);
     }
 }

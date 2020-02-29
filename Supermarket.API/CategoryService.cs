@@ -1,4 +1,5 @@
-﻿using Supermarket.API.Domain.Models;
+﻿using Supermarket.API.Attributes;
+using Supermarket.API.Domain.Models;
 using Supermarket.API.Domain.Repositories;
 using Supermarket.API.Domain.Services;
 using Supermarket.API.Domain.Services.Communication;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Supermarket.API
 {
+    [Injected]
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository categoryRepository;

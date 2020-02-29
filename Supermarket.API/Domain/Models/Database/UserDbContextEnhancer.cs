@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Supermarket.API.Attributes;
 
 namespace Supermarket.API.Domain.Models.Database
 {
+    [Injected]
     public class UserDbContextEnhancer : IModelCreatingDbContextEnhancer
     {
         public void OnModelCreating(ModelBuilder builder)

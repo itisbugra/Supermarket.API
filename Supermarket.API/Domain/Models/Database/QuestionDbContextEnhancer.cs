@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Supermarket.API.Attributes;
 
 namespace Supermarket.API.Domain.Models.Database
 {
+    [Injected]
     public class QuestionDbContextEnhancer : IModelCreatingDbContextEnhancer
     {
         public void OnModelCreating(ModelBuilder builder)
@@ -25,6 +23,13 @@ namespace Supermarket.API.Domain.Models.Database
                 {
                     Id = 100,
                     Body = "Aşağıdakilerden hangisi yanlıştır?",
+                    MimeType = EMimeType.PlainText,
+                    IsVisible = true,
+                },
+                new Question
+                {
+                    Id = 101,
+                    Body = "Bu soru da başka bir soru ama sence doğru mu?",
                     MimeType = EMimeType.PlainText,
                     IsVisible = true,
                 }

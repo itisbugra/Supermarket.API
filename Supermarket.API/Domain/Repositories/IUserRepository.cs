@@ -9,5 +9,7 @@ namespace Supermarket.API.Domain.Repositories
     public interface IUserRepository
     {
         Task<IEnumerable<User>> ListAsync();
+
+        Task<User> FindByIdAsync(int id);
     }
 }

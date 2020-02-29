@@ -1,8 +1,5 @@
-﻿using Supermarket.API.Controllers.Views;
-using Supermarket.API.Domain.Models;
-using System;
+﻿using Supermarket.API.Domain.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Supermarket.API.Domain.Services

@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Supermarket.API.Attributes;
 
 namespace Supermarket.API.Domain.Models.Database
 {
+    [Injected]
     public class PoolPickHandleDbContextEnhancer : IModelCreatingDbContextEnhancer
     {
         public void OnModelCreating(ModelBuilder builder)

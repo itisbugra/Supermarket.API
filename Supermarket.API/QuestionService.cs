@@ -1,4 +1,5 @@
-﻿using Supermarket.API.Controllers.Views;
+﻿using Supermarket.API.Attributes;
+using Supermarket.API.Controllers.Views;
 using Supermarket.API.Domain.Models;
 using Supermarket.API.Domain.Repositories;
 using Supermarket.API.Domain.Services;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Supermarket.API
 {
+    [Injected]
     public class QuestionService : IQuestionService
     {
         private readonly IQuestionRepository questionRepository;

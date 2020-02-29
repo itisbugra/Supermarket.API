@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Supermarket.API.Controllers.Forms;
 using Supermarket.API.Controllers.Views;
 using Supermarket.API.Domain.Models;
+using Supermarket.API.Domain.Repositories;
 using Supermarket.API.Domain.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Supermarket.API.Extensions;
 using System.Threading.Tasks;
 
 namespace Supermarket.API.Controllers
@@ -30,14 +30,30 @@ namespace Supermarket.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync()
+        public async Task<IActionResult> CreateAsync([FromBody] PoolPickHandleForm form)
         {
-            var user = (await userService.ListAsync()).First();
-            var category = (await categoryService.ListAsync()).First();
-            var handle = await poolPickHandleService.Pick(user, category, null);
-            var view = mapper.Map<PoolPickHandle, PoolPickHandleView>(handle);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorMessages());
+            }
 
-            return Created($"/api/categories/{handle.Question.Id}", view);
+            try
+            {
+                var user = await userService.ShowAsync(form.UserId);
+                var category = await categoryService.ShowAsync(form.CategoryId);
+                var handle = await poolPickHandleService.Pick(user, category, null);
+                var view = mapper.Map<PoolPickHandle, PoolPickHandleView>(handle);
+
+                return Created($"/api/categories/{handle.Question.Id}", view);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (PoolPickingException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }

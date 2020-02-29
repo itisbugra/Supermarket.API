@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Supermarket.API.Attributes;
 using Supermarket.API.Domain.Models;
 using Supermarket.API.Domain.Repositories;
 using Supermarket.API.Persistence.Contexts;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Supermarket.API.Persistence.Repositories
 {
+    [Injected]
     public class ContextRepository : BaseRepository, IContextRepository
     {
         public ContextRepository(AppDbContext context) : base(context)

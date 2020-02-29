@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Supermarket.API.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Supermarket.API.Domain.Models.Database
 {
+    [Injected]
     public class CategoryDbContextEnhancer : IModelCreatingDbContextEnhancer
     {
         public void OnModelCreating(ModelBuilder builder)

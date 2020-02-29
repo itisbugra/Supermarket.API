@@ -1,4 +1,5 @@
-﻿using Supermarket.API.Domain.Models;
+﻿using Supermarket.API.Attributes;
+using Supermarket.API.Domain.Models;
 using Supermarket.API.Domain.Repositories;
 using Supermarket.API.Persistence.Contexts;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Supermarket.API.Persistence.Repositories
 {
+    [Injected]
     public class PoolPickHandleRepository : BaseRepository, IPoolPickHandleRepository
     {
         public PoolPickHandleRepository(AppDbContext context) : base(context)

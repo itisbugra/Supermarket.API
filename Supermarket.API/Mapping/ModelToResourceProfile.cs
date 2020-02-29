@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Supermarket.API.Attributes;
 using Supermarket.API.Controllers.Views;
 using Supermarket.API.Domain.Models;
 using Supermarket.API.Extensions;
 
 namespace Supermarket.API.Mapping
 {
+    [Injected]
     public class ModelToResourceProfile : Profile
     {
         public ModelToResourceProfile()
